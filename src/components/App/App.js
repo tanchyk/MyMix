@@ -15,8 +15,14 @@ class App extends React.Component {
       playListTracks: [{name: 'name1', artist: 'artist1', album: 'album1', id: 1}, {name: 'name3', artist: 'artist3', album: 'album3', id: 3}]
     };
 
+    this.updatePlayListName = this.updatePlayListName.bind(this);
+
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
+  }
+
+  updatePlayListName(name) {
+    this.setState({playListName: name});
   }
 
   addTrack(track) {
@@ -41,12 +47,12 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <h1>my<span className="highlight">mix</span></h1>
         <div className="App">
           <SearchBar />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onRemove={this.removeTrack} />
-            <PlayList playListName={this.state.playListName} playListTracks={this.state.playListTracks} />
+            <PlayList playListName={this.state.playListName} playListTracks={this.state.playListTracks} onNameChange={this.updatePlayListName}/>
           </div>
         </div>
       </div>
