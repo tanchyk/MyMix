@@ -19,10 +19,15 @@ export class Track extends React.Component {
 
     addTrack() {
         this.props.onAdd(this.props.track);
+
+        //Removes Track From Search
+        this.props.onSearchRemove(this.props.track);
     }
 
     removeTrack() {
         this.props.onRemove(this.props.track);
+
+        this.props.onSearchAdd(this.props.track);
     }
 
     render() {
