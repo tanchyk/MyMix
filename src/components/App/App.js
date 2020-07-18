@@ -5,6 +5,8 @@ import { SearchResults } from '../SearchResults/SearchResults';
 import {PlayList} from '../PlayList/PlayList';
 import Spotify from '../../util/Spotify';
 
+//https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3
+
 Spotify.getAccessToken();
 
 class App extends React.Component {
@@ -75,6 +77,7 @@ class App extends React.Component {
   addSearchResults(track) {
     let tracks = this.state.searchResults;
     tracks.unshift(track);
+    console.log(track.id);
 
     this.setState({searchResults: tracks});
   }

@@ -7,6 +7,7 @@ export class Track extends React.Component {
 
         this.addTrack = this.addTrack.bind(this);
         this.removeTrack = this.removeTrack.bind(this);
+        this.playPreview = this.playPreview.bind(this);
     }
 
     renderAction(){
@@ -30,6 +31,10 @@ export class Track extends React.Component {
         this.props.onSearchAdd(this.props.track);
     }
 
+    playPreview() {
+        window.open(this.props.preview);
+    }
+
     render() {
         return (
             <div className="Track">
@@ -37,6 +42,9 @@ export class Track extends React.Component {
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist} | {this.props.track.album}</p>
                 </div>
+                <a onClick={this.playPreview} traget="_blank" class="play-button">
+                    <img width="18px" height="18px" src="https://mobiriz.com/colorm/assets/images/play-button.svg" />
+                </a>
                 {this.renderAction()}
             </div>
         );

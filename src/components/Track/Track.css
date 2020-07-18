@@ -35,3 +35,8 @@
     font-weight: 300;
     color: rgba(256, 256, 256, 0.8);
   }
+
+  .play-button:hover {
+    cursor: pointer;
+    fill: rgba(265, 265, 265, .5);
+  }
