@@ -26,6 +26,10 @@ class AppCreate extends React.Component {
     this.addSearchResults = this.addSearchResults.bind(this);
   }
 
+  componentWillMount() {
+    Spotify.getAccessToken();
+  }
+
   // Tracks
 
   addTrack(track) {
@@ -90,6 +94,7 @@ class AppCreate extends React.Component {
   render() {
     return (
         <div className="App">
+          <h4>Search songs</h4>
           <SearchBar onSearch={this.search} />
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onSearchRemove={this.removeSearchResults}/>
