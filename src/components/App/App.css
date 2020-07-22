@@ -6,6 +6,7 @@ html,
 
 html {
   font-size: 18px;
+  background-color: #f7f7f7;
 }
 
 h1 {
@@ -26,10 +27,61 @@ h2 {
   font-size: 1.55rem;
 }
 
+.header {
+  font-size: 3.2rem;
+  line-height: 4.5rem;
+  padding: 7rem 9rem;
+  background-color: #24AFBA;
+}
+
+/* Navigation */
+
+.navigation {
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation-inline {
+  width: 380px;
+  color: #fff;
+  background-color: #1d3557;
+  border-radius: 54px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.navigation-inline a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 2.4rem;
+  transition: background-color .25s;
+}
+
+.left {
+  border-top-left-radius: 54px;
+  border-bottom-left-radius: 54px;
+}
+
+.right {
+  border-top-right-radius: 54px;
+  border-bottom-right-radius: 54px;
+}
+
+.navigation-inline a:hover {
+  cursor: pointer;
+  background-color: #24AFBA;
+}
+
+/* App */
+
 .App {
   height: 100%;
   padding: 0 17% 10% 17%;
-  background-image: url('https://images.pexels.com/photos/248510/pexels-photo-248510.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940');
   opacity: 0.9;
   background-size: cover;
   background-position: center;
@@ -46,8 +98,20 @@ h2 {
 }
 
 @media only screen and (max-width: 1020px) {
+  .header {
+    font-size: 2.8rem;
+    line-height: 4rem;
+    padding: 3rem 1rem;
+  }
+
   .App-playlist {
     align-items: center;
     flex-direction: column;
+  }
+}
+
+@media only screen and (max-height: 300px) {
+  #head {
+    visibility: hidden;
   }
 }
