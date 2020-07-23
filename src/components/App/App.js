@@ -3,14 +3,12 @@ import './App.css';
 import AppCreate from '../AppCreate/AppCreate';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
 import AppChange from '../AppChange/AppChange';
-import Spotify from '../../util/Spotify';
 
-class App extends React.Component {
-  render() {
+const App = () => {
     return (
       <div>
         <Router>
-          <Link to="/" exact style={{textDecoration: 'none'}}>
+          <Link to="/" style={{textDecoration: 'none'}}>
             <h1>my<span className="highlight">mix</span></h1>
           </Link>
 
@@ -43,7 +41,6 @@ class App extends React.Component {
         </Router>
       </div>
     );
-  }
 }
 
 export default App;

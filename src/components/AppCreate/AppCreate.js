@@ -1,5 +1,4 @@
 import React from 'react';
-import './AppCreate.css';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { SearchResults } from '../SearchResults/SearchResults';
 import {PlayList} from '../PlayList/PlayList';
@@ -27,7 +26,7 @@ class AppCreate extends React.Component {
   }
 
   componentWillMount() {
-    Spotify.getAccessToken();
+    Spotify.getAccessToken('create');
   }
 
   // Tracks
@@ -95,7 +94,7 @@ class AppCreate extends React.Component {
     return (
         <div className="App">
           <h4>Search songs</h4>
-          <SearchBar onSearch={this.search} />
+          <SearchBar onSearch={this.search} placeholder={'Enter A Song, Album, or Artist'}/>
           <div className="App-playlist">
             <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrack} onSearchRemove={this.removeSearchResults}/>
             <PlayList 

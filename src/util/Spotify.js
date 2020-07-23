@@ -1,12 +1,19 @@
+import { PlayList } from "../components/PlayList/PlayList";
+
 const clientId = '22d1218ef6db4311ab97e536e8718ac0';
-const redirectUri = 'http://localhost:3000/create';
+let redirectUri = '';
 
 let accessToken;
 
 const Spotify = {
-
     // Gets access token from Spotify
-    getAccessToken() {
+    getAccessToken(check) {
+        if(check === 'create') {
+            redirectUri = 'http://localhost:3000/create'
+        } else {
+            redirectUri = 'http://localhost:3000/change'
+        }
+
         if(accessToken) {
             return accessToken;
         }
@@ -53,6 +60,36 @@ const Spotify = {
                 preview: track.preview_url
             }));
         });
+    },
+
+    async findPlaylist(term) {
+        const accessToken = Spotify.getAccessToken();
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+
+        let response = await fetch('https://api.spotify.com/v1/me/playlists', {
+            headers: headers
+        });
+
+        let data = await response.json();
+
+        for(let playlist of data.items) {
+            console.log(playlist.name)
+            if(term == playlist.name) {
+                return playlist.id;
+            }
+        }
+    },
+
+    async changePlaylist(term) {
+        const accessToken = this.getAccessToken();
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+
+        const id = await this.findPlaylist(term);
+
     },
 
     // Gets a user's ID from Spotify, creates a new playlist on user's account, and adds tracks to that playlist
