@@ -104,6 +104,7 @@ class AppCreate extends React.Component {
               onRemove={this.removeTrack}
               onSave={this.savePlayList}
               onSearchAdd={this.addSearchResults}
+              button={'SAVE TO SPOTIFY'}
             />
           </div>
         </div>

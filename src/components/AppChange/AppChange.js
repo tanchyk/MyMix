@@ -40,11 +40,16 @@ class AppChange extends React.Component {
         } else {
           let tracks = this.state.playListTracks;
           tracks.push(track);
+
+            // Отправка запроса в спотифай
+
           this.setState({ playlistTracks: tracks });
         }
       }
     
       removeTrack(track) {
+        // отправка запроса в спотифай
+
         let tracks = this.state.playListTracks;
         tracks = tracks.filter(trackNew => trackNew.id !== track.id);
     
@@ -57,20 +62,14 @@ class AppChange extends React.Component {
         this.setState({playListName: name});
       }
     
-      savePlayList() {
-        const trackURIs = this.state.playListTracks.map(track => track.uri);
-        Spotify.savePlaylist(this.state.playListName, trackURIs).then(() => {
-          this.setState({
-            playListTracks: []
-          });
-        });
-      }
-    
       // Search
 
       async findList() {
-        await Spotify.findPlaylist(this.state.playListName)
-        Spotify.changePlaylist();
+        await Spotify.changePlaylist(this.state.playListName).then(array => {
+            this.setState({
+                playListTracks: array
+            });
+        });
       }
     
       search(term) {
@@ -105,10 +104,11 @@ class AppChange extends React.Component {
             <PlayList 
                 playListName={this.state.playListName} 
                 playListTracks={this.state.playListTracks} 
-                onNameChange={this.updatePlayListName} //
+                onNameChange={this.updatePlayListName}
                 onRemove={this.removeTrack}
                 onSave={this.findList}
                 onSearchAdd={this.addSearchResults}
+                button={'LOAD THE PLAYLIST'}
             />
             </div>
         </div>

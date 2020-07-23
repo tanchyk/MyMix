@@ -75,7 +75,6 @@ const Spotify = {
         let data = await response.json();
 
         for(let playlist of data.items) {
-            console.log(playlist.name)
             if(term == playlist.name) {
                 return playlist.id;
             }
@@ -89,6 +88,32 @@ const Spotify = {
         };
 
         const id = await this.findPlaylist(term);
+
+
+        let response = await fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+            headers: headers
+        });
+
+        let data = await response.json();
+
+        return data.items.map(item => {
+            return{
+                id: item.track.id,
+                name: item.track.name,
+                artist: item.track.artists[0].name,
+                album: item.track.album.name,
+                uri: item.track.uri,
+                cover: item.track.album.images[2].url,
+                preview: item.track.preview_url
+            }
+        });
+    },
+
+    async addToPlaylist(track) {
+
+    },
+
+    async removeToPlaylist(track) {
 
     },
 
