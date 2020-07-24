@@ -4,6 +4,7 @@ const clientId = '22d1218ef6db4311ab97e536e8718ac0';
 let redirectUri = '';
 
 let accessToken;
+let id = '';
 
 const Spotify = {
     // Gets access token from Spotify
@@ -63,6 +64,10 @@ const Spotify = {
     },
 
     async findPlaylist(term) {
+        if(!term){
+            return;
+        }
+
         const accessToken = Spotify.getAccessToken();
         const headers = {
             Authorization: `Bearer ${accessToken}`
@@ -87,14 +92,18 @@ const Spotify = {
             Authorization: `Bearer ${accessToken}`
         };
 
-        const id = await this.findPlaylist(term);
+        id = await this.findPlaylist(term);
 
 
-        let response = await fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+        const response = await fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
             headers: headers
         });
 
-        let data = await response.json();
+        const data = await response.json();
+
+        if(!data.items) {
+            return;
+        }
 
         return data.items.map(item => {
             return{
@@ -110,11 +119,31 @@ const Spotify = {
     },
 
     async addToPlaylist(track) {
+        const accessToken = this.getAccessToken();
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
 
+        console.log(track.uri)
+
+        return fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+            method: 'POST',
+            headers: headers,
+            body: JSON.stringify({uris: [`${track.uri}`]})
+        });
     },
 
-    async removeToPlaylist(track) {
+    async removeFromPlaylist(track) {
+        const accessToken = this.getAccessToken();
+        const headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
 
+        return fetch(`https://api.spotify.com/v1/playlists/${id}/tracks`, {
+            method: 'DELETE',
+            headers: headers,
+            body: JSON.stringify({tracks: [{uri: track.uri }]})
+        });
     },
 
     // Gets a user's ID from Spotify, creates a new playlist on user's account, and adds tracks to that playlist

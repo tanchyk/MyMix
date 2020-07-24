@@ -19,79 +19,84 @@ class AppChange extends React.Component {
         this.removeTrack = this.removeTrack.bind(this);
     
         this.updatePlayListName = this.updatePlayListName.bind(this);
-        this.savePlayList = this.savePlayList.bind(this);
 
         this.findList = this.findList.bind(this);
     
         this.search = this.search.bind(this);
         this.removeSearchResults = this.removeSearchResults.bind(this);
         this.addSearchResults = this.addSearchResults.bind(this);
-      }
+    }
     
-      componentWillMount() {
+    componentWillMount() {
         Spotify.getAccessToken('change');
-      }
+    }
 
-      addTrack(track) {
+    async addTrack(track) {
+        console.log(this.state.playListTracks);
         //Check if track already in playlsist
         const trackUris = this.state.playListTracks.map(trackU => trackU.uri);
         if(trackUris.includes(track.uri)) {
           return;
         } else {
-          let tracks = this.state.playListTracks;
-          tracks.push(track);
+        await Spotify.addToPlaylist(track);
+
+        let tracks = this.state.playListTracks;
+        tracks.push(track);
 
             // Отправка запроса в спотифай
 
-          this.setState({ playlistTracks: tracks });
+        this.setState({ playlistTracks: tracks });
         }
-      }
+    }
     
-      removeTrack(track) {
-        // отправка запроса в спотифай
+    async removeTrack(track) {
+        await Spotify.removeFromPlaylist(track);
 
         let tracks = this.state.playListTracks;
         tracks = tracks.filter(trackNew => trackNew.id !== track.id);
     
         this.setState({playListTracks: tracks});
-      }
+    }
     
       // Playlist
     
-      updatePlayListName(name) {
+    updatePlayListName(name) {
         this.setState({playListName: name});
-      }
+    }
     
-      // Search
+    // Search
 
-      async findList() {
+    async findList() {
         await Spotify.changePlaylist(this.state.playListName).then(array => {
-            this.setState({
-                playListTracks: array
-            });
+            if(array === undefined) {
+                return;
+            } else {
+                this.setState({
+                    playListTracks: array
+                });
+            }
         });
-      }
+    }
     
-      search(term) {
+    search(term) {
         Spotify.search(term).then(searchResults => {
           this.setState({searchResults: searchResults});
         });
-      }
+    }
     
-      addSearchResults(track) {
+    addSearchResults(track) {
         let tracks = this.state.searchResults;
         tracks.unshift(track);
-        console.log(track.id);
     
         this.setState({searchResults: tracks});
-      }
+    }
     
-      removeSearchResults(track) {
+    removeSearchResults(track) {
         let tracks = this.state.searchResults;
         tracks = tracks.filter(trackNew => trackNew.id !== track.id);
     
         this.setState({searchResults: tracks});
-      }
+    }
 
     render() {
         return (

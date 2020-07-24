@@ -19,6 +19,8 @@ export class Track extends React.Component {
     }
 
     addTrack() {
+        
+
         this.props.onAdd(this.props.track);
 
         //Removes Track From Search
@@ -42,7 +44,7 @@ export class Track extends React.Component {
                     <h3>{this.props.track.name}</h3>
                     <p>{this.props.track.artist} | {this.props.track.album}</p>
                 </div>
-                <a onClick={this.playPreview} traget="_blank" class="play-button">
+                <a onClick={this.playPreview} traget="_blank" className="play-button">
                     <img width="18px" height="18px" src="https://mobiriz.com/colorm/assets/images/play-button.svg" />
                 </a>
                 {this.renderAction()}
